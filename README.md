@@ -4,7 +4,7 @@
 
 A focused RAG and agent engineering project for investigating how policy changes may affect operating procedures. The intended output is an evidence-backed review packet, not a chatbot answer or an automated compliance verdict.
 
-**Status: fixed RAG and a Gemini adapter are implemented with offline/mock tests; live verification is pending.** Version-scoped search, clause comparison and evidence preview run without a key. There is no bounded agent or UI yet. No real Gemini call, model accuracy, time-saving or security benchmark result has been established.
+**Status: fixed RAG, bounded agent and a Gemini adapter are implemented with offline/mock tests; live verification is pending.** Version-scoped search, clause comparison and evidence preview run without a key. There is no review UI yet. No real Gemini call, model accuracy, time-saving or security benchmark result has been established.
 
 [Scope & design](docs/DESIGN.md) · [Roadmap](docs/ROADMAP.md) · [Evaluation plan](docs/EVALUATION.md) · [Development rules](CONTRIBUTING.md)
 
@@ -102,7 +102,7 @@ Keys must stay outside git, logs and exported investigation packets. Live model 
 | M1: immutable sources and evidence contracts | Complete | Exact source references, validation and 14 negative/positive tests |
 | M2: versioned corpus and retrieval baseline | Complete | Seven authored revisions; development evidence recall@3 = 0.85 (not answer accuracy) |
 | M3: fixed RAG and model adapter | Implemented; live check pending | User-owned key, structured outputs, evidence checks and mocked transport tests |
-| M4: bounded investigation agent | Planned | Allowlisted tools, budgets, failure handling and injection tests |
+| M4: bounded investigation agent | Implemented; live behavior pending | Four read-only tools, resource budgets, failure states and scripted adversarial tests |
 | M5: comparative evaluation | Planned | Held-out comparison, errors, costs and limitations published |
 | M6: review experience and handoff | Planned | Small English-first review interface, demo and reproduction guide |
 
@@ -121,7 +121,7 @@ python3 -m policy_impact.retrieval compare --at 2026-09-15
 python3 -m policy_impact.cli preview --output artifacts/preview-01.json
 ```
 
-The [evidence contract](docs/EVIDENCE_CONTRACT.md) documents source fingerprints and quotations. The [corpus and retrieval report](docs/CORPUS_AND_RETRIEVAL.md) documents measured development retrieval and its failures. [Model setup and data-transfer consent](docs/MODEL_INTERFACE.md) describes the opt-in Gemini command and unverified live boundary. CI is configured for Python 3.11–3.14. A preview is not a generated investigation.
+The [evidence contract](docs/EVIDENCE_CONTRACT.md) documents source fingerprints and quotations. The [corpus and retrieval report](docs/CORPUS_AND_RETRIEVAL.md) documents measured development retrieval and its failures. [Model setup](docs/MODEL_INTERFACE.md) and [agent harness](docs/AGENT_HARNESS.md) describe opt-in commands, execution limits and the unverified live boundary. CI is configured for Python 3.11–3.14. A preview is not a generated investigation.
 
 ## What this project should demonstrate
 

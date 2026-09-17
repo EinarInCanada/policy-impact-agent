@@ -35,7 +35,9 @@ Provider-neutral reply interface, opt-in Gemini REST adapter, fixed retrieval/ge
 - Explicit opt-in before excerpts leave the local environment; keys excluded from reports/logs.
 - Structured findings with evidence validation and insufficient-information outcomes.
 
-## M4 — bounded agent: next
+## M4 — bounded agent: implemented, live behavior pending
+
+Four scoped read-only tools and a model-directed structured-action loop. Scripted tests cover permissions, budget/timeout failures, evidence checks and document-injection execution boundaries; they do not measure actual Gemini behavior. See [agent harness](AGENT_HARNESS.md). MCP transport has not been implemented.
 
 - Read-only tool registry, strict arguments, call/context limits and deterministic stop conditions.
 - Cross-reference investigation, explicit trace, timeout/retry behavior and failure reporting.

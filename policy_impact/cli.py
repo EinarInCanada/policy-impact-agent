@@ -6,6 +6,7 @@ from pathlib import Path
 import sys
 
 from .investigation import Task, prepare_fixed, run_fixed
+from .agent import run_agent
 from .provider import GeminiProvider, ProviderError
 from .retrieval import DEFAULT_CORPUS, load_index
 
@@ -37,6 +38,7 @@ def main():
     parser.add_argument('--question', default='Investigate how high-risk customer review scheduling and ownership changed, including exceptions and affected procedures.')
     parser.add_argument('--intent', choices=['current_review', 'planning_review'], default='current_review')
     parser.add_argument('--model', help='explicit available Gemini model ID; no universal default or free-quota claim')
+    parser.add_argument('--mode', choices=['fixed', 'agent'], default='fixed')
     parser.add_argument('--allow-remote', action='store_true', help='consent to send retrieved document excerpts to Google Gemini')
     parser.add_argument('--output', help='new JSON file under artifacts/')
     args = parser.parse_args()
@@ -51,11 +53,11 @@ def main():
         else:
             provider = GeminiProvider(api_key=os.environ.get('GEMINI_API_KEY', ''), model=args.model,
                                       allow_remote=args.allow_remote)
-            result = run_fixed(index, task, provider)
+            result = run_agent(index, task, provider) if args.mode == 'agent' else run_fixed(index, task, provider)
         if args.output:
             save_artifact(args.output, result)
         print(json.dumps(result, ensure_ascii=False, indent=2, allow_nan=False))
-        return 0
+        return 1 if result.get('mode') == 'bounded_agent' and result.get('status') != 'draft_ready' else 0
     except (ValueError, ProviderError, OSError, TypeError, KeyError):
         # Avoid leaking a key, confidential input, server body or arbitrary path through errors.
         print('Investigation failed. Check local input, output path, explicit remote consent, model ID and API-key configuration. '
