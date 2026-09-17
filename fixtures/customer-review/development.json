@@ -1,0 +1,17 @@
+{
+  "split": "development",
+  "annotation_note": "Authored lexical retrieval checks, not a held-out benchmark or semantic finding ground truth. Expected passages were manually matched to explicit clause IDs.",
+  "cases": [
+    {"id":"d1","query":"high risk records review months","at":"2026-10-15","role":"policy","expected":["review-policy/v2/INTERVAL"]},
+    {"id":"d2","query":"temporary exemption Annex A","at":"2026-10-15","role":"policy","expected":["review-policy/v2/EXCEPTION"]},
+    {"id":"d3","query":"approved risk register HIGH category balance","at":"2026-10-15","role":"policy","expected":["review-policy/v2/DEFINITION"]},
+    {"id":"d4","query":"overdue escalate business days","at":"2026-10-15","role":"policy","expected":["review-policy/v2/ESCALATION"]},
+    {"id":"d5","query":"high risk reviews 12 months schedule","at":"2026-10-15","role":"procedure","expected":["annual-review-procedure/v1/SCHEDULE"]},
+    {"id":"d6","query":"high risk records review months","at":"2026-09-15","role":"policy","expected":["review-policy/v1/INTERVAL"]},
+    {"id":"d7","query":"review completion evidence register","at":"2026-10-15","role":"policy","expected":["review-policy/v2/RETENTION"]},
+    {"id":"d8","query":"periodic review operations team owns scheduling","at":"2026-10-15","role":"policy","expected":["review-policy/v2/OWNER"]},
+    {"id":"d9","query":"orbital mechanics asteroids","at":"2026-10-15","role":"policy","expected":[]},
+    {"id":"d10","query":"How frequently must enhanced diligence assessments recur?","at":"2026-10-15","role":"policy","expected":["review-policy/v2/INTERVAL"]},
+    {"id":"d11","query":"Can large balances trigger the high risk review schedule?","at":"2026-10-15","role":"policy","expected":["review-policy/v2/DEFINITION","review-policy/v2/SCOPE"]}
+  ]
+}

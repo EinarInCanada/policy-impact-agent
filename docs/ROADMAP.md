@@ -18,14 +18,16 @@ Implemented in `policy_impact/evidence.py`; 14 offline unit tests pass locally. 
 - Unit tests for tampering, invalid coordinates, Unicode and duplicate revisions.
 - Document the boundary: reference validity does not establish entailment or applicability.
 
-## M2 — corpus and retrieval baseline: next
+## M2 — corpus and retrieval baseline: complete
+
+Seven authored fictional revisions, explicit date/version selection, lexical retrieval, text comparison and eleven development queries. Required-evidence mean recall@3 is 0.85 on ten answer-bearing queries; failures are published. See [corpus and retrieval](CORPUS_AND_RETRIEVAL.md). Total offline tests: 29. No model findings yet.
 
 - Select one narrow topic and publish authored, labeled fixtures with a provenance manifest.
 - Separate document roles, policy revisions and effective-date eligibility.
 - Baseline retrieval and clause comparison; development retrieval evaluation.
 - Inspect public-source reuse and existing components before expanding the corpus.
 
-## M3 — fixed RAG: planned
+## M3 — fixed RAG: next
 
 - Provider-neutral interface, one tested bring-your-own-key adapter and mock/offline tests.
 - Explicit opt-in before excerpts leave the local environment; keys excluded from reports/logs.

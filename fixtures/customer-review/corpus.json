@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "provenance": "Authored fictional customer-review policy and procedures. Not bank policy, regulation, legal advice or real incidents.",
+  "license": "MIT",
+  "sources": [
+    {
+      "document_id": "review-policy",
+      "revision_id": "v1",
+      "role": "policy",
+      "provenance": "Authored fictional policy, earlier revision; MIT",
+      "published_on": "2026-01-01",
+      "effective_on": "2026-02-01",
+      "text": "[SCOPE] This fictional policy covers periodic reviews of high-risk customer records. Low-risk customers follow a separate schedule.\n\n[DEFINITION] A high-risk customer is a customer assigned the HIGH category in the approved risk register. A large account balance alone does not establish this category.\n\n[INTERVAL] Review high-risk customer records every 12 months. Apply the documented exception in clause EXCEPTION before scheduling a review.\n\n[EXCEPTION] A high-risk customer with a documented temporary review exemption follows Annex A. Annex A is not included in this corpus; do not infer its schedule.\n\n[OWNER] The customer review team owns periodic review scheduling.\n\n[RETENTION] Keep review completion evidence in the approved evidence register."
+    },
+    {
+      "document_id": "review-policy",
+      "revision_id": "v2",
+      "role": "policy",
+      "provenance": "Authored fictional policy, later revision; MIT",
+      "published_on": "2026-08-01",
+      "effective_on": "2026-10-01",
+      "text": "[SCOPE] This fictional policy covers periodic reviews of high-risk customer records. Low-risk customers follow a separate schedule.\n\n[DEFINITION] A high-risk customer is a customer assigned the HIGH category in the approved risk register. A large account balance alone does not establish this category.\n\n[INTERVAL] Review high-risk customer records every 6 months. Apply the documented exception in clause EXCEPTION before scheduling a review.\n\n[EXCEPTION] A high-risk customer with a documented temporary review exemption follows Annex A. Annex A is not included in this corpus; do not infer its schedule.\n\n[RETENTION] Keep review completion evidence in the approved evidence register.\n\n[OWNER] The periodic review operations team owns review scheduling.\n\n[ESCALATION] Escalate overdue high-risk reviews to the periodic review operations lead within 5 business days."
+    },
+    {
+      "document_id": "annual-review-procedure",
+      "revision_id": "v1",
+      "role": "procedure",
+      "provenance": "Authored fictional outdated procedure; MIT",
+      "published_on": "2026-01-15",
+      "effective_on": "2026-02-01",
+      "text": "[SCHEDULE] Schedule high-risk customer record reviews every 12 months.\n\n[ASSIGN] Route review scheduling to the customer review team.\n\n[CHECK] Check the approved risk register for the customer category. Customers with an exemption need manual investigation of Annex A."
+    },
+    {
+      "document_id": "current-review-procedure",
+      "revision_id": "v1",
+      "role": "procedure",
+      "provenance": "Authored fictional aligned procedure; MIT",
+      "published_on": "2026-09-10",
+      "effective_on": "2026-10-01",
+      "text": "[SCHEDULE] Schedule high-risk customer record reviews every 6 months, except documented temporary exemptions governed by Annex A.\n\n[ASSIGN] Route scheduling to the periodic review operations team.\n\n[ESCALATE] Escalate overdue high-risk reviews to the periodic review operations lead within 5 business days."
+    },
+    {
+      "document_id": "low-risk-procedure",
+      "revision_id": "v1",
+      "role": "procedure",
+      "provenance": "Authored fictional scope distractor; MIT",
+      "published_on": "2026-01-01",
+      "effective_on": "2026-02-01",
+      "text": "[SCHEDULE] Schedule low-risk customer record reviews every 12 months. This procedure does not cover HIGH-category customers.\n\n[OWNER] The customer service team owns low-risk review scheduling."
+    },
+    {
+      "document_id": "future-review-procedure",
+      "revision_id": "v1",
+      "role": "procedure",
+      "provenance": "Authored fictional future-publication distractor; MIT",
+      "published_on": "2026-11-01",
+      "effective_on": "2026-12-01",
+      "text": "[SCHEDULE] Future draft: schedule high-risk customer record reviews every 3 months. This is not available in October."
+    },
+    {
+      "document_id": "undated-procedure",
+      "revision_id": "v1",
+      "role": "procedure",
+      "provenance": "Authored fictional missing-date distractor; MIT",
+      "published_on": "2026-08-01",
+      "effective_on": null,
+      "text": "[SCHEDULE] Unverified timing: schedule high-risk customer reviews monthly. The effective date is unknown."
+    }
+  ]
+}

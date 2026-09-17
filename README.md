@@ -4,7 +4,7 @@
 
 A focused RAG and agent engineering project for investigating how policy changes may affect operating procedures. The intended output is an evidence-backed review packet, not a chatbot answer or an automated compliance verdict.
 
-**Status: M1 evidence contracts implemented; 14 offline tests pass locally.** Registered source revisions and exact evidence references can be validated. There is no working retrieval pipeline, model integration, agent or UI yet. Examples below describe the intended investigation behavior, not measured capabilities. No model accuracy, time-saving or security benchmark result has been established.
+**Status: M2 corpus, lexical retrieval and evidence contracts implemented; 29 offline tests pass locally.** Version-scoped search and clause comparison are runnable on authored fictional sources. There is no model integration, agent or UI yet. The investigation examples below remain intended behavior. No model accuracy, time-saving or security benchmark result has been established.
 
 [Scope & design](docs/DESIGN.md) · [Roadmap](docs/ROADMAP.md) · [Evaluation plan](docs/EVALUATION.md) · [Development rules](CONTRIBUTING.md)
 
@@ -100,7 +100,7 @@ Keys must stay outside git, logs and exported investigation packets. Live model 
 |---|---|---|
 | M0: scope and public repository | Complete | README, design, evaluation plan and honest milestone history |
 | M1: immutable sources and evidence contracts | Complete | Exact source references, validation and 14 negative/positive tests |
-| M2: versioned corpus and retrieval baseline | Planned | Authored fixtures, time/version filtering and measured retrieval quality |
+| M2: versioned corpus and retrieval baseline | Complete | Seven authored revisions; development evidence recall@3 = 0.85 (not answer accuracy) |
 | M3: fixed RAG and model adapter | Planned | User-owned key, structured outputs and evidence checks |
 | M4: bounded investigation agent | Planned | Allowlisted tools, budgets, failure handling and injection tests |
 | M5: comparative evaluation | Planned | Held-out comparison, errors, costs and limitations published |
@@ -116,9 +116,11 @@ The deterministic core is runnable on Python 3.11–3.14 with no dependencies or
 git clone https://github.com/EinarInCanada/policy-impact-agent.git
 cd policy-impact-agent
 python3 -m unittest discover -s tests -v
+python3 -m policy_impact.retrieval search --query "temporary exemption Annex A" --role policy
+python3 -m policy_impact.retrieval compare --at 2026-09-15
 ```
 
-The [evidence contract](docs/EVIDENCE_CONTRACT.md) documents source fingerprints, exact quotations, Unicode offsets and what validation does **not** prove. CI is configured for Python 3.11–3.14. Model and demo commands will be added only when those implementations exist.
+The [evidence contract](docs/EVIDENCE_CONTRACT.md) documents source fingerprints and quotations. The [corpus and retrieval report](docs/CORPUS_AND_RETRIEVAL.md) documents dates, comparison scope, measured development retrieval and its failures. CI is configured for Python 3.11–3.14. Model and investigation-demo commands will be added only when those implementations exist.
 
 ## What this project should demonstrate
 

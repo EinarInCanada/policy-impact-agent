@@ -1,0 +1,146 @@
+{
+  "split": "development",
+  "limit": 3,
+  "rows": [
+    {
+      "id": "d1",
+      "expected": [
+        "review-policy/v2/INTERVAL"
+      ],
+      "retrieved": [
+        "review-policy/v2/INTERVAL",
+        "review-policy/v2/SCOPE",
+        "review-policy/v2/ESCALATION"
+      ],
+      "recall": 1.0,
+      "empty_query_correct": null
+    },
+    {
+      "id": "d2",
+      "expected": [
+        "review-policy/v2/EXCEPTION"
+      ],
+      "retrieved": [
+        "review-policy/v2/EXCEPTION",
+        "review-policy/v2/DEFINITION",
+        "review-policy/v2/SCOPE"
+      ],
+      "recall": 1.0,
+      "empty_query_correct": null
+    },
+    {
+      "id": "d3",
+      "expected": [
+        "review-policy/v2/DEFINITION"
+      ],
+      "retrieved": [
+        "review-policy/v2/DEFINITION",
+        "review-policy/v2/RETENTION",
+        "review-policy/v2/SCOPE"
+      ],
+      "recall": 1.0,
+      "empty_query_correct": null
+    },
+    {
+      "id": "d4",
+      "expected": [
+        "review-policy/v2/ESCALATION"
+      ],
+      "retrieved": [
+        "review-policy/v2/ESCALATION"
+      ],
+      "recall": 1.0,
+      "empty_query_correct": null
+    },
+    {
+      "id": "d5",
+      "expected": [
+        "annual-review-procedure/v1/SCHEDULE"
+      ],
+      "retrieved": [
+        "annual-review-procedure/v1/SCHEDULE",
+        "low-risk-procedure/v1/SCHEDULE",
+        "current-review-procedure/v1/SCHEDULE"
+      ],
+      "recall": 1.0,
+      "empty_query_correct": null
+    },
+    {
+      "id": "d6",
+      "expected": [
+        "review-policy/v1/INTERVAL"
+      ],
+      "retrieved": [
+        "review-policy/v1/INTERVAL",
+        "review-policy/v1/SCOPE",
+        "review-policy/v1/DEFINITION"
+      ],
+      "recall": 1.0,
+      "empty_query_correct": null
+    },
+    {
+      "id": "d7",
+      "expected": [
+        "review-policy/v2/RETENTION"
+      ],
+      "retrieved": [
+        "review-policy/v2/RETENTION",
+        "review-policy/v2/OWNER",
+        "review-policy/v2/INTERVAL"
+      ],
+      "recall": 1.0,
+      "empty_query_correct": null
+    },
+    {
+      "id": "d8",
+      "expected": [
+        "review-policy/v2/OWNER"
+      ],
+      "retrieved": [
+        "review-policy/v2/OWNER",
+        "review-policy/v2/ESCALATION",
+        "review-policy/v2/INTERVAL"
+      ],
+      "recall": 1.0,
+      "empty_query_correct": null
+    },
+    {
+      "id": "d9",
+      "expected": [],
+      "retrieved": [],
+      "recall": null,
+      "empty_query_correct": true
+    },
+    {
+      "id": "d10",
+      "expected": [
+        "review-policy/v2/INTERVAL"
+      ],
+      "retrieved": [],
+      "recall": 0.0,
+      "empty_query_correct": null
+    },
+    {
+      "id": "d11",
+      "expected": [
+        "review-policy/v2/DEFINITION",
+        "review-policy/v2/SCOPE"
+      ],
+      "retrieved": [
+        "review-policy/v2/DEFINITION",
+        "review-policy/v2/INTERVAL",
+        "review-policy/v2/ESCALATION"
+      ],
+      "recall": 0.5,
+      "empty_query_correct": null
+    }
+  ],
+  "mean_recall": 0.85,
+  "scope": "authored lexical development cases; not held-out semantic accuracy or bank performance",
+  "sha256": {
+    "corpus.json": "9675870898425867da056503b4b337b7b1cbf2831262470218ca01dac581c1ce",
+    "development.json": "1f63daacf1b852880c2ae65576dfecb4fb418811d80644ac047b99588e9418f4",
+    "retrieval.py": "98c8146d46858ffa8f369134fe9e008d7a97eb7f51c3defec68deb75599b8c22",
+    "evidence.py": "1cb1865a40ed480e7eb1652d2f223cfa738cf3d3b07570f71da0082e30b0eec8"
+  }
+}
