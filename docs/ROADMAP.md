@@ -27,13 +27,15 @@ Seven authored fictional revisions, explicit date/version selection, lexical ret
 - Baseline retrieval and clause comparison; development retrieval evaluation.
 - Inspect public-source reuse and existing components before expanding the corpus.
 
-## M3 — fixed RAG: next
+## M3 — fixed RAG: implemented, live validation pending
+
+Provider-neutral reply interface, opt-in Gemini REST adapter, fixed retrieval/generation path, strict evidence-backed packet validation and offline preview. Mocked transport tests do not establish real API compatibility. A user-owned key and consent are still required for real-request validation; see [model interface](MODEL_INTERFACE.md).
 
 - Provider-neutral interface, one tested bring-your-own-key adapter and mock/offline tests.
 - Explicit opt-in before excerpts leave the local environment; keys excluded from reports/logs.
 - Structured findings with evidence validation and insufficient-information outcomes.
 
-## M4 — bounded agent: planned
+## M4 — bounded agent: next
 
 - Read-only tool registry, strict arguments, call/context limits and deterministic stop conditions.
 - Cross-reference investigation, explicit trace, timeout/retry behavior and failure reporting.
