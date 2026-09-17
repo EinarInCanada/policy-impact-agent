@@ -54,6 +54,10 @@ class InvestigationTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             prepare_fixed(self.index, task(at='2026-07-01', intent='planning_review'))
 
+    def test_planning_rejects_reversed_publication_order(self):
+        with self.assertRaisesRegex(ValueError, 'published after'):
+            prepare_fixed(self.index, task(before='v2', after='v1', intent='planning_review'))
+
     def test_no_fabricated_or_unseen_references(self):
         for evidence_id in ('unknown/v1/A', 'future-review-procedure/v1/SCHEDULE'):
             data = packet()

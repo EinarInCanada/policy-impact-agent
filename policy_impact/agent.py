@@ -131,7 +131,7 @@ def run_agent(index, task, provider, budgets=Budgets(), clock=time.monotonic):
         model_calls += 1
         try:
             reply = provider.generate(system=AGENT_SYSTEM, payload=payload, schema=ACTION_SCHEMA)
-        except ProviderError:
+        except (ProviderError, ValueError):
             trace.append(dict(step=step + 1, event='provider_failure'))
             return result('provider_failed')
         usage.append(reply.usage)

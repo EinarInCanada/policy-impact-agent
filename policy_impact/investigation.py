@@ -64,7 +64,10 @@ def _strings(values, maximum=20):
 
 def task_context(index, task):
     comparison = index.compare(task.document_id, task.before, task.after, at=task.at)
+    before = index.corpus.get(task.document_id, task.before)
     after = index.corpus.get(task.document_id, task.after)
+    if before.published_on > after.published_on:
+        raise ValueError('before revision cannot be published after the after revision')
     if task.intent == 'current_review':
         selected, _ = index.select(task.at, 'policy')
         if not any(s.document_id == task.document_id and s.revision_id == task.after for s in selected):

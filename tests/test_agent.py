@@ -106,6 +106,13 @@ class AgentTests(unittest.TestCase):
         self.assertEqual(result['status'], 'provider_failed')
         self.assertEqual(len(provider.calls), 1)
 
+    def test_provider_input_limit_failure_keeps_failure_record(self):
+        provider = ScriptedProvider([ValueError('request byte limit')])
+        result = run_agent(self.index, task(), provider)
+        self.assertEqual(result['status'], 'provider_failed')
+        self.assertEqual(result['model_calls'], 1)
+        self.assertIsNone(result['packet'])
+
     def test_unseen_future_evidence_cannot_be_cited(self):
         action = finish()
         action['packet']['findings'][0]['evidence_ids'].append('future-review-procedure/v1/SCHEDULE')
