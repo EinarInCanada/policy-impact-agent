@@ -103,14 +103,14 @@ Keys must stay outside git, logs and exported investigation packets. Live model 
 | M2: versioned corpus and retrieval baseline | Complete | Seven authored revisions; development evidence recall@3 = 0.85 (not answer accuracy) |
 | M3: fixed RAG and model adapter | Implemented; live check pending | User-owned key, structured outputs, evidence checks and mocked transport tests |
 | M4: bounded investigation agent | Implemented; live behavior pending | Four read-only tools, resource budgets, failure states and scripted adversarial tests |
-| M5: comparative evaluation | Planned | Held-out comparison, errors, costs and limitations published |
+| M5: comparative evaluation | Development harness implemented; final study pending | Held-out comparison, errors, costs and limitations published |
 | M6: review experience and handoff | Planned | Small English-first review interface, demo and reproduction guide |
 
 Full acceptance criteria and the next action are in [ROADMAP.md](docs/ROADMAP.md). A completed research prototype would still not constitute a production certification.
 
 ## Get started
 
-The deterministic core is runnable on Python 3.11–3.14 with no dependencies or API key. There is no runnable agent yet:
+The deterministic core is runnable on Python 3.11–3.14 with no dependencies or API key. Model-backed paths require your own key and explicit opt-in:
 
 ```sh
 git clone https://github.com/EinarInCanada/policy-impact-agent.git
@@ -119,6 +119,7 @@ python3 -m unittest discover -s tests -v
 python3 -m policy_impact.retrieval search --query "temporary exemption Annex A" --role policy
 python3 -m policy_impact.retrieval compare --at 2026-09-15
 python3 -m policy_impact.cli preview --output artifacts/preview-01.json
+python3 -m policy_impact.evaluation --output artifacts/evaluation-dev-01.json
 ```
 
 The [evidence contract](docs/EVIDENCE_CONTRACT.md) documents source fingerprints and quotations. The [corpus and retrieval report](docs/CORPUS_AND_RETRIEVAL.md) documents measured development retrieval and its failures. [Model setup](docs/MODEL_INTERFACE.md) and [agent harness](docs/AGENT_HARNESS.md) describe opt-in commands, execution limits and the unverified live boundary. CI is configured for Python 3.11–3.14. A preview is not a generated investigation.
@@ -127,7 +128,7 @@ The [evidence contract](docs/EVIDENCE_CONTRACT.md) documents source fingerprints
 
 For AI application and software engineering roles: document data modeling, retrieval design, structured model integration, restricted tool execution, evaluation, testing and clear technical tradeoffs. It complements a statistical modeling project; it does not demonstrate a new foundation model or replace professional banking experience.
 
-A future portfolio claim must cite actual artifacts and measurements. At present the truthful claim is **“implemented and tested immutable source/evidence contracts for a policy investigation project”**, not “automated bank compliance” or “reduced review time.”
+A future portfolio claim must cite actual artifacts and measurements. At present the truthful claim is **“implemented version-scoped retrieval, a fixed RAG path and a bounded agent with offline evidence/tool-contract tests”**, not “automated bank compliance” or “reduced review time.” Live model quality remains unmeasured.
 
 ## License and contribution history
 

@@ -45,6 +45,8 @@ Four scoped read-only tools and a model-directed structured-action loop. Scripte
 
 ## M5 — comparative evaluation: planned
 
+Development runner implemented for five authored investigation tasks and all three paths. It preserves failed runs and available usage and deliberately leaves semantic correctness unscored. Final cases, a frozen semantic rubric and live comparison are still pending. See [evaluation instructions](EVALUATION.md).
+
 - Freeze benchmark, scoring rubric and resource configuration before final execution.
 - Compare baseline, fixed RAG and agent; publish all errors and resource use.
 - Do not assert bank-level accuracy, legal reliability or human time savings from fixture tests.

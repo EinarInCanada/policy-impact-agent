@@ -1,6 +1,18 @@
 # Evaluation plan — before experiments
 
-No experiments or human productivity study have been run. Metrics below are acceptance-design targets, not results. Freeze concrete cases, split, model/configuration and budget before final evaluation.
+Development lexical retrieval has been measured; no live model comparison or human productivity study has been run. Metrics below are acceptance-design targets unless explicitly linked to measured results. Freeze concrete cases, split, model/configuration and budget before final evaluation.
+
+## Runnable development harness
+
+`python3 -m policy_impact.evaluation --output artifacts/evaluation-dev-01.json`
+
+Runs five explicitly fictional development investigations without a key. These reuse the development corpus and are **not held out**. The output includes per-case evidence recall, failures, source/code hashes and resource records. Baseline output contains evidence, not generated findings. This recall measures the complete retrieved context (including changed clauses), **not** the M2 search-only recall@3.
+
+After following [local model setup](MODEL_INTERFACE.md), append `--modes baseline fixed agent --model YOUR_AVAILABLE_MODEL_ID --allow-remote` to opt into a three-path run. This sends excerpts to Gemini and may consume paid quota depending on your account. Five cases can attempt up to 35 model calls with current default budgets: five fixed calls and up to thirty agent calls. There are no automatic retries. The same configured provider is used for both generative paths.
+
+All attempted cases remain in summaries. Failed runs receive zero required-evidence recall even if some evidence was retrieved before failure; inspect the raw row for diagnostic evidence. Cases with no expected passages have null recall and are excluded only from that metric. Token counts are recorded as returned; missing counts are unknown, not zero. Completed response usage is retained even when subsequent packet validation fails. A transport failure can consume provider resources without returning usage.
+
+Draft success is structural/operational only. Semantic precision, recall, applicability and abstention remain **unscored**, not implicitly perfect. The runner does not accept a `final` split yet. Before final evaluation, independently author and freeze separate cases and a semantic annotation rubric; do not relabel these development fixtures as held out. Model latency is a single sequential observation, not a controlled performance benchmark. Raw artifacts can contain all source excerpts; review them before publishing.
 
 ## Three comparable paths
 

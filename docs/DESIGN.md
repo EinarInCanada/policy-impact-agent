@@ -18,7 +18,7 @@ Produce evidence-backed review packets for a policy-version change and its possi
 
 ## Proposed read-only tools
 
-These are proposed interfaces, not implemented capabilities:
+These read-only interfaces are implemented in the bounded tool registry; live model behavior remains unverified:
 
 1. `search_clauses`: search approved policy revisions and return references.
 2. `read_passage`: resolve a verified reference to source text.

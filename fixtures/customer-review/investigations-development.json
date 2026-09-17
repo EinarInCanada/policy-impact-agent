@@ -1,0 +1,31 @@
+{
+  "split": "development",
+  "annotation_note": "Authored fictional tasks over the existing development corpus. Evidence IDs were matched to source clauses, not produced by model answers. These cases are not held out and are not semantic correctness labels.",
+  "cases": [
+    {
+      "id": "interval",
+      "task": {"document_id": "review-policy", "before": "v1", "after": "v2", "at": "2026-10-15", "question": "Compare high-risk review intervals with the annual review procedure. Include scope and exceptions."},
+      "expected_evidence": ["review-policy/v1/INTERVAL", "review-policy/v2/INTERVAL", "review-policy/v2/SCOPE", "review-policy/v2/EXCEPTION", "annual-review-procedure/v1/SCHEDULE"]
+    },
+    {
+      "id": "ownership",
+      "task": {"document_id": "review-policy", "before": "v1", "after": "v2", "at": "2026-10-15", "question": "Which team owns scheduling, and does the annual review procedure assign the same team?"},
+      "expected_evidence": ["review-policy/v1/OWNER", "review-policy/v2/OWNER", "annual-review-procedure/v1/ASSIGN"]
+    },
+    {
+      "id": "already-aligned",
+      "task": {"document_id": "review-policy", "before": "v1", "after": "v2", "at": "2026-10-15", "question": "Is the current review procedure's six-month schedule already aligned with the new interval, subject to exceptions?"},
+      "expected_evidence": ["review-policy/v2/INTERVAL", "review-policy/v2/EXCEPTION", "current-review-procedure/v1/SCHEDULE"]
+    },
+    {
+      "id": "missing-annex",
+      "task": {"document_id": "review-policy", "before": "v1", "after": "v2", "at": "2026-10-15", "question": "Does Annex A grant a temporary exemption to customer CASE-42? Explain what information is missing."},
+      "expected_evidence": ["review-policy/v2/EXCEPTION"]
+    },
+    {
+      "id": "future-planning",
+      "task": {"document_id": "review-policy", "before": "v1", "after": "v2", "at": "2026-09-15", "intent": "planning_review", "question": "For planning only, compare the future six-month interval with the annual review procedure. Do not treat the future policy as currently effective."},
+      "expected_evidence": ["review-policy/v1/INTERVAL", "review-policy/v2/INTERVAL", "annual-review-procedure/v1/SCHEDULE"]
+    }
+  ]
+}
