@@ -8,7 +8,9 @@ User-approved direction: policy-change impact investigation with RAG and a bound
 - Explicitly distinguish proposed functionality from implemented behavior.
 - No dataset acquisition, live model calls or product-performance claims.
 
-## M1 — source and evidence contracts: next
+## M1 — source and evidence contracts: complete
+
+Implemented in `policy_impact/evidence.py`; 14 offline unit tests pass locally. See [the evidence contract](EVIDENCE_CONTRACT.md). CI is configured for four Python versions. No retrieval or applicability decision is implemented yet.
 
 - Immutable source revision metadata and deterministic content fingerprint.
 - Exact evidence spans with revision/hash/quote checks.
@@ -16,7 +18,7 @@ User-approved direction: policy-change impact investigation with RAG and a bound
 - Unit tests for tampering, invalid coordinates, Unicode and duplicate revisions.
 - Document the boundary: reference validity does not establish entailment or applicability.
 
-## M2 — corpus and retrieval baseline: planned
+## M2 — corpus and retrieval baseline: next
 
 - Select one narrow topic and publish authored, labeled fixtures with a provenance manifest.
 - Separate document roles, policy revisions and effective-date eligibility.

@@ -4,7 +4,7 @@
 
 A focused RAG and agent engineering project for investigating how policy changes may affect operating procedures. The intended output is an evidence-backed review packet, not a chatbot answer or an automated compliance verdict.
 
-**Status: project initialized; implementation is starting.** There is no working retrieval pipeline, model integration, agent or UI yet. Examples below describe the intended behavior, not measured capabilities. No accuracy, time-saving or security result has been established.
+**Status: M1 evidence contracts implemented; 14 offline tests pass locally.** Registered source revisions and exact evidence references can be validated. There is no working retrieval pipeline, model integration, agent or UI yet. Examples below describe the intended investigation behavior, not measured capabilities. No model accuracy, time-saving or security benchmark result has been established.
 
 [Scope & design](docs/DESIGN.md) · [Roadmap](docs/ROADMAP.md) · [Evaluation plan](docs/EVALUATION.md) · [Development rules](CONTRIBUTING.md)
 
@@ -99,7 +99,7 @@ Keys must stay outside git, logs and exported investigation packets. Live model 
 | Milestone | Status | Exit condition |
 |---|---|---|
 | M0: scope and public repository | Complete | README, design, evaluation plan and honest milestone history |
-| M1: immutable sources and evidence contracts | Planned | Exact source references, validation and negative tests |
+| M1: immutable sources and evidence contracts | Complete | Exact source references, validation and 14 negative/positive tests |
 | M2: versioned corpus and retrieval baseline | Planned | Authored fixtures, time/version filtering and measured retrieval quality |
 | M3: fixed RAG and model adapter | Planned | User-owned key, structured outputs and evidence checks |
 | M4: bounded investigation agent | Planned | Allowlisted tools, budgets, failure handling and injection tests |
@@ -110,20 +110,21 @@ Full acceptance criteria and the next action are in [ROADMAP.md](docs/ROADMAP.md
 
 ## Get started
 
-At initialization, there is no runnable agent. Clone the repository and read the design before extending it:
+The deterministic core is runnable on Python 3.11–3.14 with no dependencies or API key. There is no runnable agent yet:
 
 ```sh
 git clone https://github.com/EinarInCanada/policy-impact-agent.git
 cd policy-impact-agent
+python3 -m unittest discover -s tests -v
 ```
 
-Runnable commands will be added when the corresponding implementation exists. No paid service or API key is needed to read the project or contribute to deterministic tests.
+The [evidence contract](docs/EVIDENCE_CONTRACT.md) documents source fingerprints, exact quotations, Unicode offsets and what validation does **not** prove. CI is configured for Python 3.11–3.14. Model and demo commands will be added only when those implementations exist.
 
 ## What this project should demonstrate
 
 For AI application and software engineering roles: document data modeling, retrieval design, structured model integration, restricted tool execution, evaluation, testing and clear technical tradeoffs. It complements a statistical modeling project; it does not demonstrate a new foundation model or replace professional banking experience.
 
-A future portfolio claim must cite actual artifacts and measurements. At present the truthful claim is **“initialized an evidence-first policy investigation project”**, not “automated bank compliance” or “reduced review time.”
+A future portfolio claim must cite actual artifacts and measurements. At present the truthful claim is **“implemented and tested immutable source/evidence contracts for a policy investigation project”**, not “automated bank compliance” or “reduced review time.”
 
 ## License and contribution history
 
