@@ -1,5 +1,7 @@
 # M3: fixed RAG and Gemini interface
 
+**Multi-provider update:** see [PROVIDERS.md](PROVIDERS.md) for OpenAI, DeepSeek, Claude and custom OpenAI-compatible endpoints. Gemini-specific setup below remains valid; Gemini is no longer the only adapter.
+
 **Implementation and mocked/offline tests exist. No real Gemini request has been made in this project yet.** Live compatibility and model quality remain unverified until the owner provides a key locally and opts into sending the fictional test excerpts. Offline test responses are test doubles, not measured model performance.
 
 ## Fixed RAG

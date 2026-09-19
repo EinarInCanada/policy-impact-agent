@@ -73,6 +73,14 @@ class WebTests(unittest.TestCase):
         self.assertNotIn(b'offline-test-secret', body)
         self.assertEqual(json.loads(body)['model_calls'], 1)
 
+    def test_provider_selection_reaches_factory(self):
+        status, _, body = self.post(mode='fixed', provider='deepseek', model='test', api_key='offline-key', allow_remote=True)
+        self.assertEqual(status, 200)
+        self.assertEqual(self.configurations[-1]['provider'], 'deepseek')
+        self.assertEqual(json.loads(body)['provider'], 'deepseek')
+        _, _, config = self.request(path='/api/config')
+        self.assertEqual(len(json.loads(config)['providers']), 5)
+
     def test_scope_dates_and_extra_fields_rejected(self):
         invalid = asdict(task(at='2026-09-15'))
         self.assertEqual(self.post(task=invalid)[0], 400)

@@ -11,6 +11,7 @@ The task fixes a policy document, earlier/later revisions, date, review intent a
 | Fixed RAG | `investigation.py` | One predetermined retrieval context, one model response and strict packet validation |
 | Bounded agent | `agent.py` | Model-directed tool/finish actions; allowlisted read-only tools, scope checks and call/context/time budgets |
 | Remote boundary | `provider.py` | Explicit user key and consent, fixed Gemini HTTPS endpoint, bounded request/response size, no redirects or automatic retries |
+| Additional protocols | `providers.py` | OpenAI-compatible and Anthropic Messages adapters; provider-specific credentials, public-IP-pinned custom HTTPS endpoints and shared output validation |
 | User interfaces | `cli.py`, `web.py`, `static/` | Offline preview or opt-in model run; English local review workspace and JSON export |
 | Measurement | `evaluation.py`, `final_evaluation.py` | Comparable task runs, immutable final inputs, preflight metadata and failure-preserving checkpoints |
 | Human adjudication | `adjudication.py` | Empty reviewer forms and arithmetic over supplied labels; no automated claim verification |

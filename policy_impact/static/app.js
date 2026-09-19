@@ -11,7 +11,7 @@ function status(text, error = false) { $('status').textContent = text; $('status
 function task() { return {document_id:'review-policy', before:'v1', after:'v2', at:$('date').value, intent:$('intent').value, question:$('question').value}; }
 function setBusy(value) {
   busy = value;
-  for (const id of ['preview','generate','scenario','date','intent','question','mode','model','key','consent']) $(id).disabled = value;
+  for (const id of ['preview','generate','scenario','date','intent','question','mode','model','key','consent','provider','endpoint']) $(id).disabled = value;
   $('download').disabled = value || !latest;
   $('findings').setAttribute('aria-busy', String(value));
 }
@@ -74,7 +74,7 @@ async function run(mode) {
   if(busy || !config) return;
   if(!$('setup').reportValidity()) return;
   if(mode !== 'preview' && (!$('consent').checked || !$('key').value || !$('model').value)) { status('Enter your model ID and key, then explicitly consent to remote processing.',true); return; }
-  const payload = {task:task(),mode,model:mode === 'preview' ? null : $('model').value,api_key:mode === 'preview' ? '' : $('key').value,allow_remote:mode !== 'preview' && $('consent').checked};
+  const payload = {task:task(),mode,provider:$('provider').value,endpoint:$('provider').value === 'compatible' ? $('endpoint').value.trim() : '',model:mode === 'preview' ? null : $('model').value,api_key:mode === 'preview' ? '' : $('key').value,allow_remote:mode !== 'preview' && $('consent').checked};
   if(mode !== 'preview') { $('key').value = ''; $('consent').checked = false; }
   invalidate(); setBusy(true); status(mode === 'preview' ? 'Preparing local evidence…' : 'Investigating… The page will wait for the bounded run. Reloading does not cancel a request already sent.');
   try {
@@ -89,12 +89,22 @@ async function run(mode) {
 }
 $('setup').addEventListener('submit',e=>{ e.preventDefault(); run('preview'); });
 $('generate').addEventListener('click',()=>run($('mode').value));
+function changeProvider() {
+  $('key').value = ''; $('consent').checked = false; $('model').value = '';
+  $('endpoint').value = ''; $('endpoint-settings').hidden = $('provider').value !== 'compatible';
+  const selected = config.providers.find(p=>p.id === $('provider').value);
+  $('destination').textContent = selected.endpoint ? `Request destination: ${selected.endpoint}` : 'Request destination: the custom HTTPS endpoint you enter.';
+}
+$('provider').addEventListener('change',changeProvider);
+$('endpoint').addEventListener('input',()=>{ $('key').value=''; $('consent').checked=false; });
+$('model').addEventListener('input',()=>{ $('consent').checked=false; });
 for(const id of ['date','intent','question']) $(id).addEventListener('input',invalidate);
 $('scenario').addEventListener('change',chooseCase);
 $('download').addEventListener('click',()=>{ if(!latest) return; const url = URL.createObjectURL(new Blob([JSON.stringify(latest,null,2)],{type:'application/json'})); const a = element('a'); a.href = url; a.download = 'policy-impact-review.json'; a.click(); setTimeout(()=>URL.revokeObjectURL(url),1000); });
 async function init() {
   try {
     const response = await fetch('/api/config'); if(!response.ok) throw new Error('Cannot load the local corpus.'); config = await response.json();
+    $('provider').replaceChildren(); for(const p of config.providers){const option=element('option',p.label);option.value=p.id;$('provider').append(option);} changeProvider();
     $('scenario').replaceChildren(); for(const c of config.cases) { const option = element('option',c.id.replaceAll('-',' ')); option.value = c.id; $('scenario').append(option); }
     for(const source of config.sources) { const row = element('div',undefined,'source'); row.append(element('strong',`${source.document_id} / ${source.revision_id}`),element('p',`${source.role} · published ${source.published_on || 'unknown'} · effective ${source.effective_on || 'unknown'}`,'small'),element('p',source.provenance,'small')); $('sources').append(row); }
     chooseCase(); setBusy(false); await run('preview');

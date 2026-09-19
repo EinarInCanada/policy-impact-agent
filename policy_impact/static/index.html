@@ -19,13 +19,16 @@
       <label for="question">Review question</label><textarea id="question" rows="5" maxlength="2000" required></textarea>
       <button id="preview" type="submit" disabled>Preview evidence · no API key</button>
     </form>
-    <details id="model-settings"><summary>Generate a model draft</summary>
-      <p>Optional. Sends retrieved excerpts and your question to Google Gemini. The agent may retrieve and send more passages from this corpus. Inspect the preview and source register first.</p>
+    <details id="model-settings" open><summary>Connect your AI provider · bring your own key</summary>
+      <p>Optional. Sends retrieved excerpts and your question to the selected provider. The agent may send more passages from this corpus. Inspect the preview and source register first.</p>
+      <label for="provider">API provider</label><select id="provider" disabled><option>Loading providers…</option></select>
+      <div id="endpoint-settings" hidden><label for="endpoint">Full HTTPS chat/completions endpoint</label><input id="endpoint" type="url" placeholder="https://your-provider.example/v1/chat/completions" autocomplete="off"><p class="small">Use a service you trust: your key and excerpts go to this address. Public HTTPS only; no local endpoints, URL credentials or query strings.</p></div>
+      <p id="destination" class="small"></p>
       <label for="mode">Investigation path</label><select id="mode"><option value="fixed">Fixed RAG · up to 1 call</option><option value="agent">Bounded agent · up to 6 calls</option></select>
-      <label for="model">Your available Gemini model ID</label><input id="model" placeholder="gemini-…" autocomplete="off" spellcheck="false">
+      <label for="model">Your available model ID</label><input id="model" placeholder="Enter the provider's model ID" autocomplete="off" spellcheck="false">
       <label for="key">Your API key</label><input id="key" type="password" autocomplete="off" spellcheck="false">
-      <p class="small">Sent only to this local server and Gemini. Cleared from the form on submission; not saved to browser storage or exported. Your account's quota and charges apply.</p>
-      <label class="check"><input type="checkbox" id="consent">I consent to sending these excerpts to Gemini.</label>
+      <p class="small">Sent only to this local server and your selected endpoint. Cleared on submission or provider change; not saved to browser storage or exported. Your account's quota and charges apply. API protocol support does not guarantee every model supports JSON output.</p>
+      <label class="check"><input type="checkbox" id="consent">I consent to sending these excerpts to the selected provider.</label>
       <button id="generate" type="button" disabled>Generate draft for human review</button>
     </details>
     <p class="small">No policy edits. No compliance verdicts. Live model quality has not been benchmarked.</p>

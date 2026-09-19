@@ -4,7 +4,9 @@
 
 A focused RAG and agent engineering project for investigating how policy changes may affect operating procedures. The intended output is an evidence-backed review packet, not a chatbot answer or an automated compliance verdict.
 
-**Status: fixed RAG, bounded agent, Gemini adapter and a local English review workspace are implemented with offline/mock tests; live verification is pending.** Version-scoped search, clause comparison and evidence preview run without a key. No real Gemini call, model accuracy, time-saving or security benchmark result has been established.
+**Status: fixed RAG, bounded agent, multi-provider adapters and a local English review workspace are implemented with offline/mock tests; live verification is pending.** Version-scoped search, clause comparison and evidence preview run without a key. No real-provider accuracy, time-saving or security benchmark result has been established.
+
+**Bring your own key:** Gemini, OpenAI, DeepSeek, Anthropic Claude, or a custom public HTTPS OpenAI-compatible service. Choose directly in the local workspace. [Supported protocols and setup](docs/PROVIDERS.md).
 
 [Architecture](docs/ARCHITECTURE.md) · [Delivery audit](docs/ACCEPTANCE.md) · [Roadmap](docs/ROADMAP.md) · [Evaluation plan](docs/EVALUATION.md) · [Development rules](CONTRIBUTING.md)
 
@@ -94,7 +96,7 @@ The fixtures are authored synthetic examples, labeled as such. Public documents 
 
 ## API keys and privacy
 
-This is an open-source project, not a hosted commercial service. The implemented Gemini adapter accepts a user-supplied key through the CLI environment or local password field. Actual API compatibility and model quality have not been verified; the owner chose to defer real-model verification while finishing other delivery work. No universal free-quota or model-availability promise is made.
+This is an open-source project, not a hosted commercial service. Provider adapters accept a user-supplied key through a provider-specific CLI environment variable or local password field. Actual API compatibility and model quality have not been verified; the owner chose to defer real-model verification while finishing other delivery work. No universal free-quota or model-availability promise is made.
 
 Keys stay out of application exports and access logs, and must never be committed. Model requests require explicit opt-in; all automated tests run without a real key. The consent screen explains that source excerpts leave the machine. A local interface does not make a remote model private. These controls are tested within the documented scope, not a comprehensive security guarantee; see [privacy and limits](docs/REVIEW_WORKSPACE.md).
 
@@ -127,7 +129,7 @@ python3 -m policy_impact.evaluation --output artifacts/evaluation-dev-01.json
 python3 -m policy_impact.web --port 8766
 ```
 
-Open **http://127.0.0.1:8766/** for the local review workspace. Follow the [five-minute demo and privacy guide](docs/REVIEW_WORKSPACE.md). It starts with real retrieved fixture evidence, not simulated model answers. The optional password field accepts your own Gemini key for an explicitly consented run.
+Open **http://127.0.0.1:8766/** for the local review workspace. Follow the [five-minute demo and privacy guide](docs/REVIEW_WORKSPACE.md). It starts with real retrieved fixture evidence, not simulated model answers. The expanded provider panel accepts your selected service's key for an explicitly consented run.
 
 The [evidence contract](docs/EVIDENCE_CONTRACT.md) documents source fingerprints and quotations. The [corpus and retrieval report](docs/CORPUS_AND_RETRIEVAL.md) documents measured development retrieval and its failures. [Model setup](docs/MODEL_INTERFACE.md) and [agent harness](docs/AGENT_HARNESS.md) describe opt-in commands, execution limits and the unverified live boundary. CI is configured for Python 3.11–3.14. A preview is not a generated investigation.
 

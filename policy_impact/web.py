@@ -10,6 +10,7 @@ from .agent import run_agent
 from .evaluation import DEFAULT_CASES, load_cases
 from .investigation import Task, prepare_fixed, run_fixed
 from .provider import GeminiProvider, ProviderError, strict_json
+from .providers import make_provider, provider_options
 from .retrieval import DEFAULT_CORPUS, load_index
 
 STATIC = Path(__file__).parent / 'static'
@@ -21,7 +22,7 @@ ASSETS = {'/': ('index.html', 'text/html; charset=utf-8'),
 class ReviewServer(ThreadingHTTPServer):
     daemon_threads = True
 
-    def __init__(self, port=8766, index=None, provider_factory=GeminiProvider):
+    def __init__(self, port=8766, index=None, provider_factory=make_provider):
         self.index = index or load_index()
         self.cases = load_cases(DEFAULT_CASES, self.index)['cases']
         self.provider_factory = provider_factory
@@ -63,7 +64,7 @@ class ReviewHandler(BaseHTTPRequestHandler):
             filename, mime = ASSETS[self.path]
             return self.send_body(200, (STATIC / filename).read_bytes(), mime)
         if self.path == '/api/config':
-            return self.send_body(200, dict(csrf_token=self.server.csrf_token,
+            return self.send_body(200, dict(csrf_token=self.server.csrf_token, providers=provider_options(),
                 cases=[dict(id=c['id'], task=c['task']) for c in self.server.cases],
                 sources=[dict(document_id=s.document_id, revision_id=s.revision_id, role=s.role,
                               published_on=s.published_on, effective_on=s.effective_on,
@@ -85,7 +86,8 @@ class ReviewHandler(BaseHTTPRequestHandler):
             if not 0 < length <= 16384:
                 raise ValueError('body limit')
             payload = strict_json(self.rfile.read(length))
-            if not isinstance(payload, dict) or set(payload) != {'task', 'mode', 'model', 'api_key', 'allow_remote'}:
+            required = {'task', 'mode', 'model', 'api_key', 'allow_remote'}
+            if not isinstance(payload, dict) or not required.issubset(payload) or set(payload) - required - {'provider', 'endpoint'}:
                 raise ValueError('fields')
             task = Task(**payload['task'])
             if (task.document_id, task.before, task.after) != ('review-policy', 'v1', 'v2'):
@@ -103,8 +105,10 @@ class ReviewHandler(BaseHTTPRequestHandler):
                 return self.send_body(409, {'error': 'Another model run is active. Wait for it to finish.'})
             try:
                 provider = self.server.provider_factory(api_key=payload.pop('api_key'), model=payload['model'],
+                                                         provider=payload.get('provider', 'gemini'), endpoint=payload.get('endpoint', ''),
                                                          allow_remote=payload['allow_remote'])
                 result = run_agent(self.server.index, task, provider) if mode == 'agent' else run_fixed(self.server.index, task, provider)
+                result['provider'] = payload.get('provider', 'gemini')
                 return self.send_body(200, result)
             finally:
                 self.server.run_lock.release()
@@ -122,7 +126,7 @@ def main():
         parser.error('port must be 0–65535')
     with ReviewServer(args.port) as server:
         print(f'Review workspace: {server.origin}', flush=True)
-        print('Fictional data. Loopback only. Keys are request-scoped; remote calls require explicit consent.', flush=True)
+        print('Fictional data. Loopback only. Keys are request-scoped; selected-provider calls require explicit consent.', flush=True)
         try:
             server.serve_forever()
         except KeyboardInterrupt:

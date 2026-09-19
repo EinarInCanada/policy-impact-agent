@@ -29,6 +29,8 @@ Seven authored fictional revisions, explicit date/version selection, lexical ret
 
 ## M3 — fixed RAG: implemented, live validation pending
 
+Multi-provider extension: Gemini, OpenAI, DeepSeek, Anthropic Messages and custom public HTTPS OpenAI-compatible endpoints now share the model interface. UI/CLI/development/final evaluation accept provider selection. See [provider support](PROVIDERS.md); mock integration tests do not replace deferred real-key verification.
+
 Provider-neutral reply interface, opt-in Gemini REST adapter, fixed retrieval/generation path, strict evidence-backed packet validation and offline preview. Mocked transport tests do not establish real API compatibility. A user-owned key and consent are still required for real-request validation; see [model interface](MODEL_INTERFACE.md).
 
 - Provider-neutral interface, one tested bring-your-own-key adapter and mock/offline tests.

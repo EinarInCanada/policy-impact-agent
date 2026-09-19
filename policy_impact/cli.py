@@ -8,6 +8,7 @@ import sys
 from .investigation import Task, prepare_fixed, run_fixed
 from .agent import run_agent
 from .provider import GeminiProvider, ProviderError
+from .providers import PROVIDERS, make_provider
 from .retrieval import DEFAULT_CORPUS, load_index
 
 
@@ -37,9 +38,11 @@ def main():
     parser.add_argument('--at', default='2026-10-15')
     parser.add_argument('--question', default='Investigate how high-risk customer review scheduling and ownership changed, including exceptions and affected procedures.')
     parser.add_argument('--intent', choices=['current_review', 'planning_review'], default='current_review')
-    parser.add_argument('--model', help='explicit available Gemini model ID; no universal default or free-quota claim')
+    parser.add_argument('--model', help='explicit available model ID for the selected provider')
+    parser.add_argument('--provider', choices=list(PROVIDERS), default='gemini')
+    parser.add_argument('--endpoint', default='', help='full public HTTPS chat/completions URL for compatible provider')
     parser.add_argument('--mode', choices=['fixed', 'agent'], default='fixed')
-    parser.add_argument('--allow-remote', action='store_true', help='consent to send retrieved document excerpts to Google Gemini')
+    parser.add_argument('--allow-remote', action='store_true', help='consent to send retrieved excerpts to the selected provider')
     parser.add_argument('--output', help='new JSON file under artifacts/')
     args = parser.parse_args()
     try:
@@ -51,9 +54,10 @@ def main():
             result = dict(mode='offline_preview', model_calls=0, investigation=prepare_fixed(index, task)[0],
                           notice='Retrieved evidence only; no generated findings, no model or agent evaluation.')
         else:
-            provider = GeminiProvider(api_key=os.environ.get('GEMINI_API_KEY', ''), model=args.model,
-                                      allow_remote=args.allow_remote)
+            provider = make_provider(provider=args.provider, endpoint=args.endpoint,
+                                     api_key=os.environ.get(PROVIDERS[args.provider]['env'], ''), model=args.model, allow_remote=args.allow_remote)
             result = run_agent(index, task, provider) if args.mode == 'agent' else run_fixed(index, task, provider)
+            result['provider'] = args.provider
         if args.output:
             save_artifact(args.output, result)
         print(json.dumps(result, ensure_ascii=False, indent=2, allow_nan=False))

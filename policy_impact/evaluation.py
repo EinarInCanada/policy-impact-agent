@@ -12,6 +12,7 @@ from .agent import Budgets, run_agent
 from .cli import save_artifact, validate_output_path
 from .investigation import Task, prepare_fixed, run_fixed
 from .provider import GeminiProvider, strict_json
+from .providers import PROVIDERS, make_provider
 from .retrieval import DEFAULT_CORPUS, load_index
 
 DEFAULT_CASES = DEFAULT_CORPUS.parent / 'investigations-development.json'
@@ -116,6 +117,8 @@ def main():
     parser.add_argument('--corpus', default=str(DEFAULT_CORPUS))
     parser.add_argument('--modes', nargs='+', choices=['baseline', 'fixed', 'agent'], default=['baseline'])
     parser.add_argument('--model')
+    parser.add_argument('--provider', choices=list(PROVIDERS), default='gemini')
+    parser.add_argument('--endpoint', default='')
     parser.add_argument('--allow-remote', action='store_true')
     parser.add_argument('--output', required=True, help='new file under artifacts/')
     args = parser.parse_args()
@@ -124,8 +127,10 @@ def main():
     manifest = load_cases(args.cases, index)
     provider = None
     if set(args.modes) - {'baseline'}:
-        provider = GeminiProvider(api_key=os.environ.get('GEMINI_API_KEY', ''), model=args.model, allow_remote=args.allow_remote)
+        provider = make_provider(provider=args.provider, endpoint=args.endpoint,
+                                 api_key=os.environ.get(PROVIDERS[args.provider]['env'], ''), model=args.model, allow_remote=args.allow_remote)
     result = evaluate(index, manifest, tuple(args.modes), provider)
+    result['provider'] = args.provider if provider else None
     source_paths = [Path(args.cases), Path(args.corpus), *sorted(Path(__file__).parent.glob('*.py'))]
     result['input_sha256'] = [dict(name=p.name, sha256=hashlib.sha256(p.read_bytes()).hexdigest()) for p in source_paths]
     save_artifact(args.output, result)

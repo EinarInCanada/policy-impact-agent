@@ -14,6 +14,7 @@ from .cli import save_artifact, validate_output_path
 from .evaluation import evaluate
 from .investigation import SYSTEM
 from .provider import GeminiProvider, strict_json
+from .providers import PROVIDERS, make_provider
 from .retrieval import load_index
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -59,6 +60,8 @@ def main():
     parser.add_argument('--output', required=True, help='new final JSON under artifacts/')
     parser.add_argument('--baseline-only', action='store_true', help='offline evidence-only run, not a full comparison')
     parser.add_argument('--model')
+    parser.add_argument('--provider', choices=list(PROVIDERS), default='gemini')
+    parser.add_argument('--endpoint', default='')
     parser.add_argument('--allow-remote', action='store_true')
     args = parser.parse_args()
     output = validate_output_path(args.output)
@@ -66,11 +69,15 @@ def main():
     if companion.exists():
         raise ValueError('choose new output and checkpoint directory')
     modes = ('baseline',) if args.baseline_only else ('baseline', 'fixed', 'agent')
-    if args.baseline_only and (args.model or args.allow_remote):
+    if args.baseline_only and (args.model or args.allow_remote or args.endpoint or args.provider != 'gemini'):
         raise ValueError('baseline-only must not configure remote execution')
-    provider = None if args.baseline_only else GeminiProvider(api_key=os.environ.get('GEMINI_API_KEY', ''),
-                                                            model=args.model, allow_remote=args.allow_remote)
+    provider = None if args.baseline_only else make_provider(provider=args.provider, endpoint=args.endpoint,
+        api_key=os.environ.get(PROVIDERS[args.provider]['env'], ''), model=args.model, allow_remote=args.allow_remote)
     config = preflight(provider.model if provider else None, modes)
+    config['provider_id'] = args.provider if provider else None
+    config['request_endpoint'] = (args.endpoint or PROVIDERS[args.provider]['endpoint']) if provider else None
+    if provider and args.provider != 'gemini':
+        config['provider']['temperature'] = 'provider default (not sent)'
     _, manifest, index = frozen_inputs()
     save_artifact(companion / 'preflight.json', config)  # must succeed BEFORE any provider request
     completed = 0

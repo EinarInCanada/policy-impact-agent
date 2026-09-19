@@ -21,6 +21,8 @@ All dates, procedures and customer references are fictional. The initial October
 
 ## Your own model key
 
+The current page expands **Connect your AI provider** by default. Choose Gemini, OpenAI, DeepSeek, Claude or a custom compatible endpoint; see [provider setup](PROVIDERS.md). The historical Gemini example below remains supported, but is no longer the only option. Switching provider or endpoint clears the key and consent to avoid accidental cross-provider credential transfer.
+
 Expand **Generate a model draft** after inspecting the preview. Choose fixed RAG or the bounded agent, enter an available Gemini model ID and your own API key, and explicitly consent. No model ID, quota or free tier is assumed. The fixed path makes one model call; the agent can make up to six under its other budgets. Provider charges and quotas depend on your account.
 
 The page sends credentials to the local server over loopback HTTP; the provider adapter sends its request to Gemini over HTTPS. The UI does not use cookies, localStorage, sessionStorage, third-party assets or analytics. It clears the password field and consent on submission. Credentials are not included in response/export objects or access logs and are not saved by the application. They still exist transiently in browser/server memory; this is not secure memory erasure or protection against a compromised local computer, browser extension or debugging tools.
