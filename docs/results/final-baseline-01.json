@@ -1,0 +1,31 @@
+{
+  "report_type": "compact_summary_of_offline_final_baseline",
+  "benchmark_id": "final-review-v1",
+  "git_revision": "8e1a75197be52bb879b5168918f53ea3fb0fd70e",
+  "completed_at_utc": "2026-09-19T01:48:26.703244+00:00",
+  "command": "python3 -m policy_impact.final_evaluation --baseline-only --output artifacts/final-baseline-01.json",
+  "local_full_artifact_sha256": "76764a86a16c2963e13ef50805fbc763db1c1b009a93f8b50ad6d5b3e0033aa9",
+  "preflight_canonical_sha256": "0d292c159806e098062df669c3cab65858d5c1b02ac027ff5dbc8eb7cbecfad5",
+  "total_cases": 8,
+  "successful_runs": 8,
+  "saved_row_checkpoints": 8,
+  "model_calls": 0,
+  "mean_required_evidence_recall": 0.9083333333333333,
+  "rows": [
+    {"case_id":"f1-cadence","required_evidence_recall":0.8333333333333334,"missing":["enhanced-review-policy/r2/DEFINITION"]},
+    {"case_id":"f2-owner","required_evidence_recall":1.0,"missing":[]},
+    {"case_id":"f3-aligned","required_evidence_recall":0.6,"missing":["enhanced-review-policy/r2/EXCEPTION","revised-desk/r1/CADENCE"]},
+    {"case_id":"f4-missing-schedule","required_evidence_recall":1.0,"missing":[]},
+    {"case_id":"f5-planning","required_evidence_recall":1.0,"missing":[]},
+    {"case_id":"f6-no-substantive-change","required_evidence_recall":1.0,"missing":[]},
+    {"case_id":"f7-conflict","required_evidence_recall":1.0,"missing":[]},
+    {"case_id":"f8-injection","required_evidence_recall":0.8333333333333334,"missing":["enhanced-review-policy/r2/SCOPE"]}
+  ],
+  "limitations": [
+    "Complete-context evidence recall, not answer accuracy, semantic finding quality or recall@k.",
+    "Newly authored synthetic final fixtures, not independent bank data or human-validated ground truth.",
+    "No model answers, semantic adjudication or agent superiority measurements.",
+    "Full artifact remains local; this committed compact report is not that artifact. Reproduce using the recorded commit and command; timing fields and hashes will differ on rerun.",
+    "Final retrieval results have now been observed. Do not tune against these cases and continue claiming they were unseen."
+  ]
+}

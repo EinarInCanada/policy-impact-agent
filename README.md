@@ -10,6 +10,8 @@ A focused RAG and agent engineering project for investigating how policy changes
 
 [Frozen final-run protocol and human review](docs/FINAL_RUN.md) document how to reproduce the comparison without dropping failed cases or confusing citation validity with semantic correctness.
 
+**Measured offline:** the first frozen eight-case baseline retrieved 90.8% of annotated required passages on average. This is not answer accuracy; three cases missed important context. [Results and misses](docs/FINAL_BASELINE_RESULTS.md).
+
 ## The problem
 
 Finding a changed sentence is only the beginning. A reviewer still needs to establish which version applies, read definitions and exceptions, locate the affected procedure, and explain why someone should examine it.
