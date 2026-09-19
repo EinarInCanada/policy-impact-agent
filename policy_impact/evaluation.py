@@ -51,7 +51,7 @@ def load_cases(path, index):
     return manifest
 
 
-def evaluate(index, manifest, modes=('baseline',), provider=None):
+def evaluate(index, manifest, modes=('baseline',), provider=None, on_row=None):
     if not modes or len(set(modes)) != len(modes) or set(modes) - {'baseline', 'fixed', 'agent'}:
         raise ValueError('choose unique supported modes')
     if set(modes) - {'baseline'} and provider is None:
@@ -92,6 +92,8 @@ def evaluate(index, manifest, modes=('baseline',), provider=None):
                                                  if expected and success else 0.0 if expected else None),
                        semantic_review='pending' if mode != 'baseline' else 'not_applicable')
             rows.append(row)
+            if on_row is not None:
+                on_row(row)  # checkpoint failure aborts; do not silently spend more quota
     summaries = {}
     for mode in modes:
         selected = [r for r in rows if r['mode'] == mode]
@@ -102,7 +104,7 @@ def evaluate(index, manifest, modes=('baseline',), provider=None):
     return dict(schema_version=1, split=manifest['split'], rows=rows, summaries=summaries,
                 model=provider.model if provider else None, agent_budgets=asdict(Budgets()),
                 corpus_fingerprints=sorted(s.fingerprint for s in index.sources),
-                limitations=['Development cases, not a held-out estimate.',
+                limitations=['Authored synthetic cases; not independent bank data or a population estimate.',
                              'Operational success and reference recall do not establish semantic correctness.',
                              'Failed runs remain in denominators; missing usage is unknown, not zero.',
                              'Sequential single runs; ordering and warm-up effects are not controlled.'])

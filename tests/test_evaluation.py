@@ -56,6 +56,16 @@ class EvaluationTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 evaluate(self.index, self.manifest, modes)
 
+    def test_checkpoints_include_failures_and_checkpoint_errors_stop_run(self):
+        checkpoints = []
+        result = evaluate(self.index, self.manifest, ('fixed',), Provider(), on_row=checkpoints.append)
+        self.assertEqual(checkpoints, result['rows'])
+        self.assertEqual(len(checkpoints), 5)
+        def failing_checkpoint(row):
+            raise OSError('disk failure')
+        with self.assertRaises(OSError):
+            evaluate(self.index, self.manifest, on_row=failing_checkpoint)
+
     def test_manifest_rejects_unknown_evidence_duplicates_and_final_split(self):
         for variant in ('unknown', 'duplicate', 'final'):
             manifest = copy.deepcopy(self.manifest)

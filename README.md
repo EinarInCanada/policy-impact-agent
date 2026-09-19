@@ -8,6 +8,8 @@ A focused RAG and agent engineering project for investigating how policy changes
 
 [Scope & design](docs/DESIGN.md) · [Roadmap](docs/ROADMAP.md) · [Evaluation plan](docs/EVALUATION.md) · [Development rules](CONTRIBUTING.md)
 
+[Frozen final-run protocol and human review](docs/FINAL_RUN.md) document how to reproduce the comparison without dropping failed cases or confusing citation validity with semantic correctness.
+
 ## The problem
 
 Finding a changed sentence is only the beginning. A reviewer still needs to establish which version applies, read definitions and exceptions, locate the affected procedure, and explain why someone should examine it.

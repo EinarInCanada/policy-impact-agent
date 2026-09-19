@@ -45,7 +45,7 @@ Four scoped read-only tools and a model-directed structured-action loop. Scripte
 
 ## M5 — comparative evaluation: planned
 
-Development runner implemented for five authored investigation tasks and all three paths. It preserves failed runs and available usage and deliberately leaves semantic correctness unscored. A separate eight-case synthetic final corpus and [semantic rubric](FINAL_SCORING.md) are hash-frozen; final-run support, human adjudication and live comparison remain pending. See [evaluation instructions](EVALUATION.md).
+Development runner implemented for five authored investigation tasks and all three paths. It preserves failed runs and available usage and deliberately leaves semantic correctness unscored. A separate eight-case synthetic final corpus and [semantic rubric](FINAL_SCORING.md) are hash-frozen. The [final runner](FINAL_RUN.md) records preflight configuration and checkpoints; blank human review forms and label aggregation are implemented. Actual human adjudication and live comparison remain pending. See [evaluation instructions](EVALUATION.md).
 
 - Freeze benchmark, scoring rubric and resource configuration before final execution.
 - Compare baseline, fixed RAG and agent; publish all errors and resource use.
