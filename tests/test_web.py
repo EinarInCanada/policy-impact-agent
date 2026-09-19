@@ -81,6 +81,19 @@ class WebTests(unittest.TestCase):
         _, _, config = self.request(path='/api/config')
         self.assertEqual(len(json.loads(config)['providers']), 5)
 
+    def test_saved_demo_routes_do_not_construct_a_provider(self):
+        before=len(self.configurations)
+        for demo_id in ('policy-change','missing-evidence'):
+            status, headers, body=self.request(path='/api/demos/'+demo_id)
+            self.assertEqual(status,200)
+            result=json.loads(body)
+            self.assertEqual(result['mode'],'saved_demo')
+            self.assertTrue(result['packet']['findings'])
+            self.assertEqual(result['model_calls'],0)
+            self.assertNotIn('api_key',result)
+        self.assertEqual(len(self.configurations),before)
+        self.assertEqual(self.request(path='/api/demos/../corpus.json')[0],404)
+
     def test_scope_dates_and_extra_fields_rejected(self):
         invalid = asdict(task(at='2026-09-15'))
         self.assertEqual(self.post(task=invalid)[0], 400)

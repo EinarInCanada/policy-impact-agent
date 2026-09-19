@@ -12,11 +12,13 @@ function task() { return {document_id:'review-policy', before:'v1', after:'v2', 
 function setBusy(value) {
   busy = value;
   for (const id of ['preview','generate','scenario','date','intent','question','mode','model','key','consent','provider','endpoint']) $(id).disabled = value;
+  for (const button of document.querySelectorAll('#demo-list button')) button.disabled = value;
   $('download').disabled = value || !latest;
   $('findings').setAttribute('aria-busy', String(value));
 }
 function invalidate() {
   latest = null; $('download').disabled = true;
+  $('demo-notice').hidden = true; $('demo-notice').replaceChildren();
   for (const id of ['scope','metrics','changes','evidence']) $(id).replaceChildren();
   $('findings').replaceChildren(element('p', 'Inputs changed. Preview evidence or generate a new draft.', 'empty'));
   $('trace').textContent = 'No execution for the current inputs.';
@@ -30,9 +32,12 @@ function render(result) {
   const context = result.investigation, packet = result.packet;
   const evidence = result.discovered_evidence || context.evidence;
   const anchors = new Map(evidence.map((e, i) => [e.id, `evidence-${i}`]));
+  $('demo-notice').hidden = result.mode !== 'saved_demo';
+  $('demo-notice').replaceChildren();
+  if(result.demo){$('demo-notice').append(element('strong','Saved AI-authored example · not a live run'),element('p',result.notice));}
   $('scope').textContent = `${context.investigation_date} · ${context.intent.replaceAll('_',' ')} · ${context.timing_warning}. Sources are fictional. Human review required.`;
   $('metrics').replaceChildren();
-  for (const [value, label] of [[context.comparison.changes.length,'Changed clauses'],[evidence.length,'Retrieved passages'],[result.model_calls || 0,'Model calls']]) {
+  for (const [value, label] of [[context.comparison.changes.length,'Changed clauses'],[evidence.length,result.demo ? 'Included evidence passages' : 'Retrieved passages'],[result.model_calls || 0,result.demo ? 'Live model calls' : 'Model calls']]) {
     const box = element('div',undefined,'metric'); box.append(element('strong',String(value)),element('span',label)); $('metrics').append(box);
   }
   $('findings').replaceChildren();
@@ -52,6 +57,7 @@ function render(result) {
     }
     for (const limitation of packet.limitations) $('findings').append(element('p',limitation,'small'));
     $('findings').append(element('p',packet.mandatory_notice,'notice'));
+    if(result.demo){const next=element('article',undefined,'card');next.append(element('h4','What the reviewer does next'));const list=element('ol');for(const step of result.demo.next_steps)list.append(element('li',step));next.append(list);$('findings').append(next);}
   }
   $('changes').replaceChildren();
   for (const change of context.comparison.changes) {
@@ -68,7 +74,21 @@ function render(result) {
     card.append(element('h4',e.id),element('blockquote',e.reference.quote));
     const details = element('details'); details.append(element('summary','Verified reference coordinates'),element('code',`[${e.reference.start}, ${e.reference.end}) Unicode code points · SHA-256 ${e.reference.source_fingerprint}`)); card.append(details); $('evidence').append(card);
   }
-  $('trace').textContent = JSON.stringify({mode:result.mode,status:result.status || 'draft_ready',model:result.model || null,model_calls:result.model_calls || 0,tool_calls:result.tool_calls || 0,elapsed_seconds:result.elapsed_seconds ?? null,usage:result.usage || result.usage_per_call || null,trace:result.trace || [],retrieval_exclusions:context.retrieval_exclusions},null,2);
+  $('trace').textContent = JSON.stringify({mode:result.mode,status:result.status || 'draft_ready',model:result.model || null,model_calls:result.model_calls || 0,tool_calls:result.tool_calls || 0,elapsed_seconds:result.elapsed_seconds ?? null,usage:result.usage || result.usage_per_call || null,trace:result.trace || [],demo_provenance:result.demo?.provenance || null,reports_sha256:result.demo?.reports_sha256 || null,retrieval_exclusions:context.retrieval_exclusions},null,2);
+}
+async function loadDemo(id) {
+  if(busy || !config) return;
+  invalidate();setBusy(true);status('Opening saved example… No model request.');
+  $('key').value='';$('consent').checked=false;
+  try {
+    const response=await fetch(`/api/demos/${encodeURIComponent(id)}`);
+    if(!response.ok)throw new Error('Saved example could not be loaded.');
+    const result=await response.json();
+    $('scenario').value=result.demo.scenario_id;
+    $('date').value=result.task.at;$('intent').value=result.task.intent;$('question').value=result.task.question;
+    latest=result;render(result);
+    status(`Saved example: ${result.demo.title}. No API key used; no live model call.`);
+  } catch(error){status(error.message,true);} finally{setBusy(false);}
 }
 async function run(mode) {
   if(busy || !config) return;
@@ -105,9 +125,10 @@ async function init() {
   try {
     const response = await fetch('/api/config'); if(!response.ok) throw new Error('Cannot load the local corpus.'); config = await response.json();
     $('provider').replaceChildren(); for(const p of config.providers){const option=element('option',p.label);option.value=p.id;$('provider').append(option);} changeProvider();
+    for(const demo of config.demos){const button=element('button',undefined,'demo-button');button.type='button';button.append(element('strong',demo.title),element('span',demo.description));button.addEventListener('click',()=>loadDemo(demo.id));$('demo-list').append(button);}
     $('scenario').replaceChildren(); for(const c of config.cases) { const option = element('option',c.id.replaceAll('-',' ')); option.value = c.id; $('scenario').append(option); }
     for(const source of config.sources) { const row = element('div',undefined,'source'); row.append(element('strong',`${source.document_id} / ${source.revision_id}`),element('p',`${source.role} · published ${source.published_on || 'unknown'} · effective ${source.effective_on || 'unknown'}`,'small'),element('p',source.provenance,'small')); $('sources').append(row); }
-    chooseCase(); setBusy(false); await run('preview');
+    chooseCase(); setBusy(false); await loadDemo(config.demos[0].id);
   } catch(error) { status(error.message,true); }
 }
 init();

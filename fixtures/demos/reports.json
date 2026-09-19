@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "provenance": "AI-authored illustrative reports written by the coding assistant for this project. Not captured Gemini, Claude or other provider runs; not evaluation results or independently reviewed findings.",
+  "corpus_sha256": "9675870898425867da056503b4b337b7b1cbf2831262470218ca01dac581c1ce",
+  "demos": [
+    {
+      "id": "policy-change",
+      "title": "Find outdated procedures",
+      "description": "A review interval changes from 12 to 6 months. See which instructions need attention—and which already match.",
+      "scenario_id": "interval",
+      "task": {"document_id":"review-policy","before":"v1","after":"v2","at":"2026-10-15","intent":"current_review","question":"Investigate changes to high-risk review intervals and ownership. Compare the annual and current procedures, subject to policy scope and exceptions."},
+      "packet": {
+        "summary": "Two instructions in the annual-review procedure need human review: its twelve-month schedule and its old scheduling owner. The current-review procedure already reflects the six-month schedule and new team, subject to documented exemptions. This is a scoped review packet, not a finding that the organization is non-compliant.",
+        "findings": [
+          {"status":"needs_review","statement":"Review the annual procedure's scheduling instruction. Policy v1 required reviews every 12 months; v2 requires every 6 months and is effective from October 1, before this October 15 investigation. The annual procedure still says 12 months. For customers actually classified HIGH, confirm exemption applicability before proposing a scheduling update.","evidence_ids":["review-policy/v1/INTERVAL","review-policy/v2/INTERVAL","annual-review-procedure/v1/SCHEDULE","review-policy/v2/SCOPE","review-policy/v2/DEFINITION","review-policy/v2/EXCEPTION"],"missing_information":["Annex A is absent; exempt customers cannot be assigned a schedule from this corpus alone."]},
+          {"status":"needs_review","statement":"Review the annual procedure's ownership instruction. The old policy assigned scheduling to the customer review team; the new policy assigns it to the periodic review operations team. The annual procedure still routes scheduling to the old team. Confirm the intended operational owner before editing that procedure.","evidence_ids":["review-policy/v1/OWNER","review-policy/v2/OWNER","annual-review-procedure/v1/ASSIGN"],"missing_information":[]},
+          {"status":"no_issue_identified","statement":"Within the inspected current-review procedure, the six-month schedule and periodic review operations team match policy v2. Its schedule also preserves the Annex A exception. No mismatch is identified in these two instructions; this does not certify the entire process or resolve any individual exemption.","evidence_ids":["review-policy/v2/INTERVAL","review-policy/v2/OWNER","review-policy/v2/EXCEPTION","current-review-procedure/v1/SCHEDULE","current-review-procedure/v1/ASSIGN"],"missing_information":[]}
+        ],
+        "limitations":["Fictional policy and procedures; this saved AI-authored example was not produced by a live provider run.","Only the described scheduling and ownership instructions are assessed. Escalation changes and actual operational execution require separate review.","No procedure has been edited. Exact references are validated by code, but semantic conclusions still require human review."]
+      },
+      "next_steps": ["Open the cited passages and verify the old/new policy wording against the procedure.","Ask the procedure owner to review the two potential mismatches; do not automatically rewrite source documents.","Obtain Annex A before deciding any exempt customer's schedule."]
+    },
+    {
+      "id": "missing-evidence",
+      "title": "Stop when evidence is missing",
+      "description": "An exemption refers to an absent annex. See a useful answer that names what is missing instead of inventing a decision.",
+      "scenario_id": "missing-annex",
+      "task": {"document_id":"review-policy","before":"v1","after":"v2","at":"2026-10-15","intent":"current_review","question":"Does Annex A grant a temporary exemption to customer CASE-42, and what exact review schedule applies? State what the available documents can and cannot establish."},
+      "packet": {
+        "summary": "The available documents do not establish whether CASE-42 has a valid temporary exemption or which schedule Annex A would prescribe. The appropriate output is a request for the missing annex and customer records—not an invented exemption decision or review date.",
+        "findings": [
+          {"status":"insufficient_evidence","statement":"An exact exemption schedule cannot be determined. Policy v2 directs documented temporary exemptions to Annex A, but Annex A is explicitly absent from the corpus. The annual procedure likewise requires manual investigation of that annex. Do not substitute the ordinary six-month interval for an unknown exemption schedule.","evidence_ids":["review-policy/v2/EXCEPTION","review-policy/v2/INTERVAL","annual-review-procedure/v1/CHECK"],"missing_information":["The applicable version of Annex A, including its scheduling rules and any effective-date conditions."]},
+          {"status":"insufficient_evidence","statement":"CASE-42's eligibility is also unresolved. The question supplies a customer identifier, not an approved risk classification or exemption record. Policy defines high risk through the HIGH category in the approved register; neither the customer's classification nor a valid temporary exemption can be verified from the supplied policy and procedure passages.","evidence_ids":["review-policy/v2/DEFINITION","review-policy/v2/SCOPE","review-policy/v2/EXCEPTION","annual-review-procedure/v1/CHECK"],"missing_information":["CASE-42's entry in the approved risk register.","Documented exemption approval and validity period for CASE-42, if any."]}
+        ],
+        "limitations":["CASE-42 and all documents are fictional; no personal customer record was accessed.","This is a saved AI-authored illustration of evidence-aware abstention, not a measured model result.","The system has not approved or denied an exemption and has not modified any source data."]
+      },
+      "next_steps": ["Ask the reviewer for the applicable Annex A and its version/date.","Obtain the customer's classification and exemption record through an authorized workflow.","Reassess only when the missing evidence is available; leave the current decision unresolved."]
+    }
+  ]
+}

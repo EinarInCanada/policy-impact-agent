@@ -11,6 +11,7 @@ from .evaluation import DEFAULT_CASES, load_cases
 from .investigation import Task, prepare_fixed, run_fixed
 from .provider import GeminiProvider, ProviderError, strict_json
 from .providers import make_provider, provider_options
+from .demos import load_demos
 from .retrieval import DEFAULT_CORPUS, load_index
 
 STATIC = Path(__file__).parent / 'static'
@@ -25,6 +26,7 @@ class ReviewServer(ThreadingHTTPServer):
     def __init__(self, port=8766, index=None, provider_factory=make_provider):
         self.index = index or load_index()
         self.cases = load_cases(DEFAULT_CASES, self.index)['cases']
+        self.demos = load_demos(self.index)
         self.provider_factory = provider_factory
         self.csrf_token = secrets.token_urlsafe(32)
         self.run_lock = threading.Lock()
@@ -65,10 +67,15 @@ class ReviewHandler(BaseHTTPRequestHandler):
             return self.send_body(200, (STATIC / filename).read_bytes(), mime)
         if self.path == '/api/config':
             return self.send_body(200, dict(csrf_token=self.server.csrf_token, providers=provider_options(),
+                demos=[dict(id=r['demo']['id'], title=r['demo']['title'], description=r['demo']['description']) for r in self.server.demos.values()],
                 cases=[dict(id=c['id'], task=c['task']) for c in self.server.cases],
                 sources=[dict(document_id=s.document_id, revision_id=s.revision_id, role=s.role,
                               published_on=s.published_on, effective_on=s.effective_on,
                               fingerprint=s.fingerprint, provenance=s.provenance) for s in self.server.index.sources]))
+        if self.path.startswith('/api/demos/'):
+            result = self.server.demos.get(self.path.removeprefix('/api/demos/'))
+            if result is not None:
+                return self.send_body(200, result)
         return self.send_body(404, {'error': 'Not found.'})
 
     def do_POST(self):

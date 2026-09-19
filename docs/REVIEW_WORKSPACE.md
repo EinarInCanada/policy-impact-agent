@@ -10,7 +10,7 @@ Open **http://127.0.0.1:8766/**, exactly as printed. The server binds only to IP
 
 ## Five-minute demo
 
-1. Open the default interval investigation. The page automatically prepares an **offline evidence preview**; this does not call a model.
+1. Open the workspace. It automatically displays **Find outdated procedures**, a saved AI-authored example with a prominent provenance label. Switch to **Stop when evidence is missing** to see the second report. Neither calls a model; see [saved-demo provenance](BUILT_IN_DEMOS.md). Press **Preview evidence** to replace the saved report with a fresh deterministic preview that contains no generated findings.
 2. Compare the earlier twelve-month and later six-month clauses. The change list is an exact textual comparison, not an AI impact judgment.
 3. Read the evidence register and source provenance. The annual procedure, aligned current procedure and low-risk distractor are different documents. A relevant keyword alone does not establish applicability.
 4. Choose `future planning`. Its September date precedes the new policy's October effective date. Planning is permitted, but the notice explicitly distinguishes it from current applicability. Switching to currently effective policy at that date causes input rejection.

@@ -8,6 +8,8 @@ A focused RAG and agent engineering project for investigating how policy changes
 
 **Bring your own key:** Gemini, OpenAI, DeepSeek, Anthropic Claude, or a custom public HTTPS OpenAI-compatible service. Choose directly in the local workspace. [Supported protocols and setup](docs/PROVIDERS.md).
 
+**Try it without a key:** two saved AI-authored examples show outdated-procedure review and missing-evidence handling. The first opens automatically, with cited passages and reviewer next steps. These are clearly labeled illustrations, not captured provider runs. [Explore the demos](docs/BUILT_IN_DEMOS.md).
+
 [Architecture](docs/ARCHITECTURE.md) · [Delivery audit](docs/ACCEPTANCE.md) · [Roadmap](docs/ROADMAP.md) · [Evaluation plan](docs/EVALUATION.md) · [Development rules](CONTRIBUTING.md)
 
 [Frozen final-run protocol and human review](docs/FINAL_RUN.md) document how to reproduce the comparison without dropping failed cases or confusing citation validity with semantic correctness.
@@ -129,7 +131,7 @@ python3 -m policy_impact.evaluation --output artifacts/evaluation-dev-01.json
 python3 -m policy_impact.web --port 8766
 ```
 
-Open **http://127.0.0.1:8766/** for the local review workspace. Follow the [five-minute demo and privacy guide](docs/REVIEW_WORKSPACE.md). It starts with real retrieved fixture evidence, not simulated model answers. The expanded provider panel accepts your selected service's key for an explicitly consented run.
+Open **http://127.0.0.1:8766/** for the local review workspace. It starts with a labeled, saved AI-authored demo report and exact fictional-source references—not a live model run. Switch demos, inspect evidence or export the sample JSON. The expanded provider panel accepts your selected service's key for a new, explicitly consented run. See the [demo and privacy guide](docs/REVIEW_WORKSPACE.md).
 
 The [evidence contract](docs/EVIDENCE_CONTRACT.md) documents source fingerprints and quotations. The [corpus and retrieval report](docs/CORPUS_AND_RETRIEVAL.md) documents measured development retrieval and its failures. [Model setup](docs/MODEL_INTERFACE.md) and [agent harness](docs/AGENT_HARNESS.md) describe opt-in commands, execution limits and the unverified live boundary. CI is configured for Python 3.11–3.14. A preview is not a generated investigation.
 
