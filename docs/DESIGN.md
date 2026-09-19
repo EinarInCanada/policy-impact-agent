@@ -14,9 +14,9 @@ Produce evidence-backed review packets for a policy-version change and its possi
 - A bounded agent is part of the project, but its advantage over fixed RAG is an empirical question. Both paths must use the same approved corpus and evidence contract.
 - No arbitrary Python, SQL, shell, URLs or file paths supplied by the model may be executed. Retrieval tools will resolve IDs within an approved corpus.
 - No autonomous edits. Human confirmation is a workflow boundary, not a mechanism that excuses unchecked generated claims.
-- Provider integration is planned as bring-your-own-key. Do not call any provider until key handling, opt-in data transfer and resource ceilings are implemented.
+- Provider integration uses bring-your-own-key with explicit opt-in. Key handling and resource ceilings are implemented; live verification is deferred by the owner. Do not infer permission to run a model from the existence of this adapter.
 
-## Proposed read-only tools
+## Implemented read-only tools
 
 These read-only interfaces are implemented in the bounded tool registry; live model behavior remains unverified:
 

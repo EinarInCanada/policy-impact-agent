@@ -6,7 +6,7 @@ A focused RAG and agent engineering project for investigating how policy changes
 
 **Status: fixed RAG, bounded agent, Gemini adapter and a local English review workspace are implemented with offline/mock tests; live verification is pending.** Version-scoped search, clause comparison and evidence preview run without a key. No real Gemini call, model accuracy, time-saving or security benchmark result has been established.
 
-[Scope & design](docs/DESIGN.md) · [Roadmap](docs/ROADMAP.md) · [Evaluation plan](docs/EVALUATION.md) · [Development rules](CONTRIBUTING.md)
+[Architecture](docs/ARCHITECTURE.md) · [Delivery audit](docs/ACCEPTANCE.md) · [Roadmap](docs/ROADMAP.md) · [Evaluation plan](docs/EVALUATION.md) · [Development rules](CONTRIBUTING.md)
 
 [Frozen final-run protocol and human review](docs/FINAL_RUN.md) document how to reproduce the comparison without dropping failed cases or confusing citation validity with semantic correctness.
 
@@ -30,7 +30,7 @@ The useful output is not “your organization is non-compliant.” It is:
 
 Each finding should identify its supporting passages, versions, applicability assumptions and unresolved questions. If the exception, attachment or effective date is missing, the system should say so.
 
-## The workflow we are building
+## The implemented workflow
 
 ```text
 Two policy versions + procedure documents + investigation date
@@ -71,7 +71,7 @@ The intended contribution is a small, inspectable implementation and benchmark o
 
 The [evaluation plan](docs/EVALUATION.md) compares a rules/retrieval baseline, fixed RAG and a bounded agent. Agent complexity is not assumed to be an improvement. If an existing component already solves a subproblem, reuse it and attribute it.
 
-## Planned investigation output
+## Investigation output
 
 | Field | Purpose |
 |---|---|
@@ -90,13 +90,13 @@ The [evaluation plan](docs/EVALUATION.md) compares a rules/retrieval baseline, f
 
 **Out of scope:** legal advice, automatic compliance decisions, internet-wide regulatory monitoring, production bank integration, automatic document edits, confidential customer records, multi-agent swarms and model training.
 
-The first fixtures will be authored synthetic examples, labeled as such. Public documents may be added only after source, version and reuse conditions are checked. Public availability does not automatically authorize redistribution. Real bank procedure data is not required.
+The fixtures are authored synthetic examples, labeled as such. Public documents may be added only after source, version and reuse conditions are checked. Public availability does not automatically authorize redistribution. Real bank procedure data is not required.
 
 ## API keys and privacy
 
-This is an open-source project, not a hosted commercial service. The model interface will support a user-supplied key, starting with a Gemini adapter if the chosen API/model is suitable at implementation time. No universal free-quota or model-availability promise is made.
+This is an open-source project, not a hosted commercial service. The implemented Gemini adapter accepts a user-supplied key through the CLI environment or local password field. Actual API compatibility and model quality have not been verified; the owner chose to defer real-model verification while finishing other delivery work. No universal free-quota or model-availability promise is made.
 
-Keys must stay outside git, logs and exported investigation packets. Live model calls will be opt-in; unit tests must work without a key. Before any model request, users must understand which document excerpts leave their machine. A local interface does not make a remote model private. These are implementation requirements, not completed security guarantees.
+Keys stay out of application exports and access logs, and must never be committed. Model requests require explicit opt-in; all automated tests run without a real key. The consent screen explains that source excerpts leave the machine. A local interface does not make a remote model private. These controls are tested within the documented scope, not a comprehensive security guarantee; see [privacy and limits](docs/REVIEW_WORKSPACE.md).
 
 ## Development status
 

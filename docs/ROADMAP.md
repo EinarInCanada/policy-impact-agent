@@ -10,7 +10,7 @@ User-approved direction: policy-change impact investigation with RAG and a bound
 
 ## M1 — source and evidence contracts: complete
 
-Implemented in `policy_impact/evidence.py`; 14 offline unit tests pass locally. See [the evidence contract](EVIDENCE_CONTRACT.md). CI is configured for four Python versions. No retrieval or applicability decision is implemented yet.
+Implemented in `policy_impact/evidence.py`; 14 evidence-contract tests pass locally. See [the evidence contract](EVIDENCE_CONTRACT.md). CI is configured for four Python versions. Retrieval and date selection are covered by subsequent milestones.
 
 - Immutable source revision metadata and deterministic content fingerprint.
 - Exact evidence spans with revision/hash/quote checks.
@@ -43,7 +43,7 @@ Four scoped read-only tools and a model-directed structured-action loop. Scripte
 - Cross-reference investigation, explicit trace, timeout/retry behavior and failure reporting.
 - Tests for injection, invalid tool requests and budget exhaustion. No unrestricted execution.
 
-## M5 — comparative evaluation: planned
+## M5 — comparative evaluation: tooling and offline baseline delivered; live study deferred
 
 Development runner implemented for five authored investigation tasks and all three paths. It preserves failed runs and available usage and deliberately leaves semantic correctness unscored. A separate eight-case synthetic final corpus and [semantic rubric](FINAL_SCORING.md) are hash-frozen. The [final runner](FINAL_RUN.md) records preflight configuration and checkpoints; blank human review forms and label aggregation are implemented. Actual human adjudication and live comparison remain pending. See [evaluation instructions](EVALUATION.md).
 
@@ -51,14 +51,16 @@ Development runner implemented for five authored investigation tasks and all thr
 - Compare baseline, fixed RAG and agent; publish all errors and resource use.
 - Do not assert bank-level accuracy, legal reliability or human time savings from fixture tests.
 
-## M6 — review experience and handoff: planned
+## M6 — review experience and handoff: delivery audit in progress
 
-Local English workspace and [demo/privacy guide](REVIEW_WORKSPACE.md) implemented. HTTP integration tests and JavaScript syntax checks pass; browser visual QA and the final acceptance audit remain pending. No hosted service or real Gemini verification is claimed.
+Local English workspace, [demo/privacy guide](REVIEW_WORKSPACE.md), [architecture](ARCHITECTURE.md) and [requirement audit](ACCEPTANCE.md) delivered. HTTP integration tests, JavaScript syntax checks and documented browser interactions/export pass. Screenshot capture repeatedly timed out; visual acceptance remains pending. No hosted service or real Gemini verification is claimed.
 
 - English-first review interface showing evidence and uncertainty, not a generic chat-only view.
 - Reproducible demo, architecture explanation, limitations and final requirement audit.
 - Public code and reviewed artifacts only; no keys or confidential documents.
 
 ## Publication rule
+
+The owner explicitly deferred real-model verification on September 18, 2026 (Toronto). This also defers semantic adjudication of actual model responses; no substitute test-double result counts as live completion. See the [delivery audit](ACCEPTANCE.md) for the remaining boundaries.
 
 Each coherent increment: run relevant checks, inspect changes and staged paths, commit a factual message, push, and verify the remote outcome. No empty or backdated commits. A local blocked milestone is not complete merely because code exists.

@@ -39,6 +39,6 @@ Export contains excerpts and model-generated text, so inspect it before sharing.
 
 ## Verification and limitations
 
-Automated HTTP tests cover loopback configuration, static-route allowlisting, Host/Origin/token checks, offline provider isolation, scoped inputs, credential exclusion from a mocked response and the single-run lock. JavaScript syntax is checked separately. These are not a penetration test, browser accessibility audit or live Gemini verification. Responsive CSS and keyboard-oriented semantic controls are implemented; visual/browser QA remains pending.
+Automated HTTP tests cover loopback configuration, static-route allowlisting, Host/Origin/token checks, offline provider isolation, scoped inputs, credential exclusion from a mocked response and the single-run lock. JavaScript syntax is checked separately. [Browser checks](BROWSER_CHECK.md) verify offline previews, date rejection, stale-result invalidation, consent guard and an actual JSON download. Screenshot capture failed, so visual acceptance remains pending. These checks are not a penetration test, comprehensive accessibility audit or live Gemini verification.
 
 The interface currently exposes only the authored customer-review corpus and fixed revision pair. Arbitrary uploads, user accounts, persistent investigations and policy edits are deliberately absent. The CLI supports explicitly selected compatible corpus manifests for research. English is the interface language for this project milestone.
