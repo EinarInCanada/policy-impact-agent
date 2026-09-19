@@ -1,0 +1,11 @@
+{
+  "benchmark_id": "final-review-v1",
+  "frozen_on": "2026-09-18",
+  "state": "cases-and-rubric-frozen-before-final-model-execution",
+  "notice": "Corpus, tasks and rubric only. Live model identity and implementation configuration must also be recorded before the final run. Integrity tests do not measure model quality.",
+  "sha256": {
+    "fixtures/final-review/corpus.json": "9b729cea74910f4529507e7594e7c9cdb120e91beb4ee0951347a6f920954a16",
+    "fixtures/final-review/cases.json": "c8760925ae10eed55f3f3f9cc96124aec0f464b94d02e7648c0a2d610e54ad99",
+    "docs/FINAL_SCORING.md": "a83e4e73a61705190b2f0bdd7df7de01b97418b99674a00db96839963720ef0e"
+  }
+}

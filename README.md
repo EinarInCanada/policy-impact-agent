@@ -103,7 +103,7 @@ Keys must stay outside git, logs and exported investigation packets. Live model 
 | M2: versioned corpus and retrieval baseline | Complete | Seven authored revisions; development evidence recall@3 = 0.85 (not answer accuracy) |
 | M3: fixed RAG and model adapter | Implemented; live check pending | User-owned key, structured outputs, evidence checks and mocked transport tests |
 | M4: bounded investigation agent | Implemented; live behavior pending | Four read-only tools, resource budgets, failure states and scripted adversarial tests |
-| M5: comparative evaluation | Development harness implemented; final study pending | Held-out comparison, errors, costs and limitations published |
+| M5: comparative evaluation | Development harness implemented; eight final cases and rubric frozen; live study pending | Held-out comparison, errors, costs and limitations published |
 | M6: review experience and handoff | Local interface and demo guide implemented; final audit pending | Small English-first review interface, demo and reproduction guide |
 
 Full acceptance criteria and the next action are in [ROADMAP.md](docs/ROADMAP.md). A completed research prototype would still not constitute a production certification.
