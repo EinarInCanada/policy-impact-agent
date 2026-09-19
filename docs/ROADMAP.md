@@ -53,6 +53,8 @@ Development runner implemented for five authored investigation tasks and all thr
 
 ## M6 — review experience and handoff: planned
 
+Local English workspace and [demo/privacy guide](REVIEW_WORKSPACE.md) implemented. HTTP integration tests and JavaScript syntax checks pass; browser visual QA and the final acceptance audit remain pending. No hosted service or real Gemini verification is claimed.
+
 - English-first review interface showing evidence and uncertainty, not a generic chat-only view.
 - Reproducible demo, architecture explanation, limitations and final requirement audit.
 - Public code and reviewed artifacts only; no keys or confidential documents.
